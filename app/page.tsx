@@ -165,7 +165,14 @@ export default function Home() {
         >
           <div className="text-left w-full">
             {/* Glowing line */}
-            <div className="w-20 h-4 mb-4 rounded-full bg-gradient-to-r from-gray-200 via-white to-gray-400 animate-pulse shadow-[0_0_15px_rgba(255,255,255,0.6)]" />
+            <div
+              className="
+              w-20 h-4 mb-4 
+              rounded-full 
+              bg-linear-to-r from-gray-200 via-white to-gray-400 
+              animate-pulse 
+              shadow-[0_0_15px_rgba(255,255,255,0.6)]"
+            />
 
             {/* Name & Dark toggle */}
             <div className="flex gap-6 sm:flex-row sm:justify-between sm:items-center mb-2">
@@ -203,8 +210,10 @@ export default function Home() {
                 ability in various areas of computer science.
               </p>
               <p className="mt-3 italic text-blue-400">
-                "You don't have to be great to start. But you have to start to
-                be great." – Zig Ziglar
+                {
+                  "You don't have to be great to start. But you have to start to be great."
+                }{" "}
+                – Zig Ziglar
               </p>
             </div>
 
@@ -306,12 +315,9 @@ export default function Home() {
               <p
                 className={`mt-3 text-sm ${theme.secondaryText} leading-relaxed`}
               >
-                Contributing as a Frontend Developer at Herald College
-                Kathmandu's development platform (HCK), where I collaborate with
-                a team to build full-stack web applications using Next.js,
-                Tailwind CSS, TypeScript, and modern frontend tools. Actively
-                involved in designing responsive UIs, integrating APIs, and
-                maintaining clean, scalable code for real-world projects.
+                {
+                  "Contributing as a Frontend Developer at Herald College Kathmandu's development platform (HCK), where I collaborate with a team to build full-stack web applications using Next.js, Tailwind CSS, TypeScript, and modern frontend tools. Actively involved in designing responsive UIs, integrating APIs, and maintaining clean, scalable code for real-world projects."
+                }
               </p>
               <p
                 className={`mt-2 text-sm italic font-semibold ${theme.accent}`}
@@ -329,11 +335,9 @@ export default function Home() {
               <p
                 className={`mt-3 text-sm ${theme.secondaryText} leading-relaxed`}
               >
-                As an SQL Data Intern, I contributed to the company's
-                administrative operations by executing SQL queries to input and
-                manage data through the admin panel. My role involved ensuring
-                accurate and efficient data entry, contributing to smooth
-                backend operations and reliable data systems.
+                {
+                  "As an SQL Data Intern, I contributed to the company's administrative operations by executing SQL queries to input and manage data through the admin panel. My role involved ensuring accurate and efficient data entry, contributing to smooth backend operations and reliable data systems."
+                }
               </p>
               <p
                 className={`mt-2 text-sm italic font-semibold ${theme.accent}`}

@@ -22,9 +22,7 @@ const geistMono = Geist_Mono({
 
 // Metadata
 export const metadata: Metadata = {
-  title: "Shubham Raj Pandey — Frontend Developer",
-  description:
-    "Portfolio of Shubham Raj Pandey, a passionate Frontend Developer skilled in Next.js, Tailwind CSS, and TypeScript.",
+  title: "Shubham Raj Pandey ",
 };
 
 // Root Layout
@@ -40,7 +38,6 @@ export default function RootLayout({
           ${poppins.variable} 
           ${geistSans.variable} 
           ${geistMono.variable} 
-          font-[var(--font-poppins)]
           bg-[#0b0b0b] 
           text-gray-200 
           antialiased 
