@@ -28,6 +28,51 @@ export default function Portfolio() {
   const toggleDark = () => setDark(!dark);
   const { scrollYProgress } = useScroll();
 
+  const [formData, setFormData] = useState({
+    name: "",
+    email: "",
+    message: "",
+  });
+  const [loading, setLoading] = useState(false);
+
+  const handleChange = (
+    e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>
+  ) => {
+    setFormData({ ...formData, [e.target.name]: e.target.value });
+  };
+
+  const handleSubmit = async () => {
+    if (!formData.name || !formData.email || !formData.message) {
+      alert("Please fill all fields");
+      return;
+    }
+
+    setLoading(true);
+    try {
+      const res = await fetch(
+        "https://my-portfolio-backend-rnsi.onrender.com/my-portfolio",
+        {
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify(formData),
+        }
+      );
+
+      const data = await res.json();
+
+      if (res.ok) {
+        alert("Message sent successfully!");
+        setFormData({ name: "", email: "", message: "" });
+      } else {
+        alert(data.message || "Failed to send message.");
+      }
+    } catch (err) {
+      alert("Server error. Try again later." + err);
+    } finally {
+      setLoading(false);
+    }
+  };
+
   useEffect(() => {
     const handleScroll = () => {
       if (window.scrollY > 400) setShowScrollTop(true);
@@ -412,6 +457,8 @@ export default function Portfolio() {
                 <input
                   name="name"
                   placeholder="Full Name"
+                  value={formData.name}
+                  onChange={handleChange}
                   className="w-full p-2.5 md:p-3 mt-1 rounded-lg bg-transparent border border-gray-300 focus:outline-none text-xs sm:text-sm"
                 />
               </div>
@@ -423,6 +470,8 @@ export default function Portfolio() {
                   type="email"
                   name="email"
                   placeholder="Email"
+                  value={formData.email}
+                  onChange={handleChange}
                   className="w-full p-2.5 md:p-3 mt-1 rounded-lg bg-transparent border border-gray-300 focus:outline-none text-xs sm:text-sm"
                 />
               </div>
@@ -434,14 +483,18 @@ export default function Portfolio() {
                   name="message"
                   placeholder="Type your message..."
                   rows={4}
+                  value={formData.message}
+                  onChange={handleChange}
                   className="w-full p-2.5 md:p-3 mt-1 rounded-lg bg-transparent border border-gray-300 focus:outline-none text-xs sm:text-sm resize-none"
                 />
               </div>
               <button
                 type="button"
+                onClick={handleSubmit}
                 className={`w-full ${theme.btn} py-2 md:py-2.5 rounded-lg text-xs sm:text-sm transition`}
+                disabled={loading}
               >
-                Send Message
+                {loading ? "Sending..." : "Send Message"}
               </button>
             </div>
           </div>
