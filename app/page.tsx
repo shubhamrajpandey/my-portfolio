@@ -21,7 +21,34 @@ import {
   Layout,
   Figma,
 } from "lucide-react";
+
+function Toast({
+  type,
+  message,
+}: {
+  type: "success" | "error";
+  message: string;
+}) {
+  const color =
+    type === "success" ? "bg-green-600 text-white" : "bg-red-600 text-white";
+
+  return (
+    <motion.div
+      initial={{ opacity: 0, y: -10, scale: 0.95 }}
+      animate={{ opacity: 1, y: 0, scale: 1 }}
+      exit={{ opacity: 0, y: -10, scale: 0.95 }}
+      transition={{ duration: 0.3 }}
+      className={`${color} px-4 py-2 rounded-lg shadow-lg text-sm font-medium`}
+    >
+      {message}
+    </motion.div>
+  );
+}
 export default function Portfolio() {
+  const [toast, setToast] = useState<{
+    type: "success" | "error";
+    message: string;
+  } | null>(null);
   const [dark, setDark] = useState(true);
   const [showScrollTop, setShowScrollTop] = useState(false);
   const [showAllProjects, setShowAllProjects] = useState(false);
@@ -43,7 +70,7 @@ export default function Portfolio() {
 
   const handleSubmit = async () => {
     if (!formData.name || !formData.email || !formData.message) {
-      alert("Please fill all fields");
+      setToast({ type: "error", message: "Please fill all fields." });
       return;
     }
 
@@ -61,17 +88,31 @@ export default function Portfolio() {
       const data = await res.json();
 
       if (res.ok) {
-        alert("Message sent successfully!");
+        setToast({ type: "success", message: "Message sent successfully!" });
         setFormData({ name: "", email: "", message: "" });
       } else {
-        alert(data.message || "Failed to send message.");
+        setToast({
+          type: "error",
+          message: data.message || "Failed to send message.",
+        });
       }
     } catch (err) {
-      alert("Server error. Try again later." + err);
+      setToast({
+        type: "error",
+        message: "Server error. Try again later." + err,
+      });
     } finally {
       setLoading(false);
     }
   };
+
+  // Auto-hide toast
+  useEffect(() => {
+    if (toast) {
+      const timer = setTimeout(() => setToast(null), 3000);
+      return () => clearTimeout(timer);
+    }
+  }, [toast]);
 
   useEffect(() => {
     const handleScroll = () => {
@@ -167,6 +208,15 @@ export default function Portfolio() {
           >
             ↑
           </motion.button>
+        )}
+      </AnimatePresence>
+
+      {/* Toast Notification */}
+      <AnimatePresence>
+        {toast && (
+          <div className="fixed top-5 right-5 z-9999">
+            <Toast type={toast.type} message={toast.message} />
+          </div>
         )}
       </AnimatePresence>
 
